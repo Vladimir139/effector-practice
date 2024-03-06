@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { getCssText, setupGlobalStyles } from "@/shared/lib/styles";
+import React from "react";
+import "normalize.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,9 +13,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  setupGlobalStyles();
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <style id="stitches" dangerouslySetInnerHTML={{ __html: getCssText() }} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
